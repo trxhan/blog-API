@@ -4,7 +4,7 @@ const mongoDBConnectionString = "mongodb+srv://dbUser1:12345@cluster0.umcvw.mong
 const HTTP_PORT = process.env.PORT || 8080;
 
 const express = require("express");
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const cors = require("cors");
 
 const dataService = require("./modules/data-service.js");
@@ -13,9 +13,11 @@ const app = express();
 
 app.use(express.json());
 // app.use(bodyParser.json());
-
+// app.use(bodyParser.urlencoded({extended: true})); 
 
 app.use(cors());
+
+
 
 app.post("/api/posts", (req,res)=>{
     data.addNewPost(req.body).then((msg)=>{
