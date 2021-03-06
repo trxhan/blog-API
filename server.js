@@ -1,4 +1,6 @@
-const mongoDBConnectionString = "mongodb+srv://jhhan10@myseneca.ca:Qoo@3388@senecaweb.ratit.mongodb.net/blog?retryWrites=true&w=majority";
+const mongoDBConnectionString = "mongodb+srv://dbUser1:12345@cluster0.umcvw.mongodb.net/blog?retryWrites=true&w=majority";
+
+
 const HTTP_PORT = process.env.PORT || 8080;
 
 const express = require("express");
