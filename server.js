@@ -5,14 +5,16 @@ const HTTP_PORT = process.env.PORT || 8080;
 
 const express = require("express");
 const bodyParser = require('body-parser');
-
 const cors = require("cors");
-const dataService = require("./modules/data-service.js");
 
+const dataService = require("./modules/data-service.js");
 const data = dataService(mongoDBConnectionString);
 const app = express();
 
-app.use(bodyParser.json());
+app.use(express.json());
+// app.use(bodyParser.json());
+
+
 app.use(cors());
 
 app.post("/api/posts", (req,res)=>{
