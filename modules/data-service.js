@@ -1,25 +1,33 @@
 const mongoose = require('mongoose');
-
 mongoose.Promise = global.Promise; // Added to get around the deprecation warning: "Mongoose: promise (mongoose's default promise library) is deprecated"
 
-// Load the schema
-const postSchema = require('./post-schema.js');
+const postSchema = require('./post-schema.js');  // Load the schema
 
-module.exports = function(mongoDBConnectionString){
+
+// module.exports = function(mongoDBConnectionString){
+module.exports = mongoDBConnectionString => {
 
     let Post; // defined on connection to the new db instance
+    // Post 는 아래 여러가지 명령에 다 쓰여질거라서 밖에서 정의한거다.
 
     return {
         connect: function(){
             return new Promise(function(resolve,reject){
-                let db = mongoose.createConnection(mongoDBConnectionString,{ useNewUrlParser: true, useUnifiedTopology: true });
+                let connection = mongoose.createConnection(mongoDBConnectionString, {
+                    useNewUrlParser: true,
+                    useUnifiedTopology: true 
+                    });
                 
-                db.on('error', (err)=>{
+                connection.on('error', (err)=>{
                     reject(err);
                 });
         
-                db.once('open', ()=>{
-                    Post = db.model("Post", postSchema);
+                connection.once('open', ()=>{
+                    console.log("Connected to the database!");
+        // var SomeModel = mongoose.model('SomeModel', SomeModelSchema );
+                    Post = connection.model("Post", postSchema);
+                    // Post 라는 Model을 스키마형식에 맞춰서 만들었다.
+                    // 이제 Post 를 가지고 findOne 등등을 할것이다.
                     resolve();
                 });
             });
